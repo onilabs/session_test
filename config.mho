@@ -1,0 +1,29 @@
+@ = require([
+  'mho:std'
+]);
+
+//----------------------------------------------------------------------
+
+exports.serve = function(args) {
+
+  var routes = [
+    // __mho, etc:
+    @route.SystemRoutes(),
+
+    // shared frontend/backend code:
+    @route.CodeDirectory("lib/", 
+                         require.url("./modules/lib") .. @url.toPath),
+
+    // frontend:
+    @route.ExecutableDirectory(/^/, 
+                               require.url("./modules/frontend/") .. @url.toPath)
+  ];
+
+  @server.run([
+    {
+      address: @Port(6060),
+      routes: routes
+    }
+  ]);
+
+}

@@ -1,0 +1,30 @@
+@ = require([
+  'mho:std',
+  {id:'../backend/user-db', name: 'db'}
+]);
+
+//----------------------------------------------------------------------
+
+exports.login = function(credentials) {
+  var {username, password} = credentials .. JSON.parse;
+  @db.verifyUser(username, password);
+
+  return Session(username);
+};
+
+exports.register = function(credentials) {
+  var {username, password} = credentials .. JSON.parse;
+  @db.registerUser(username, password);
+  
+  return Session(username);
+}
+
+//----------------------------------------------------------------------
+
+// session api for an authenticated user:
+function Session(username) {
+  return {
+    user: username,
+    time: @generate(-> new Date())
+  };
+}
